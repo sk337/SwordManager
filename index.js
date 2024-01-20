@@ -2,6 +2,8 @@
 
 import cosmetics from "./cosmetics.json" assert { type: "json" };
 
+console.log(Intl.DateTimeFormat().resolvedOptions().timeZone)
+
 
 const ApiUrl = "https://sb-api-fb48ef34a197.herokuapp.com/";
 
@@ -63,6 +65,8 @@ let html = '<p><span class="font-bold">Account Info</span><br/>';
 
 html += `<span class="text-sky-500">username:</span> ${data.account.username}<br>`;
 
+html += `<span class="text-sky-500">user id:</span> ${prettyNum(data.account.id)}<br>`;
+
 html += `<span class="text-sky-500">gems:</span> ${prettyNum(
   data.account.gems,
 )}`;
@@ -85,6 +89,17 @@ ${prettyNum(
 )}`;
 
 html += `<br><span class="text-sky-500">is v1:</span> ${data.account.is_v1}`;
+
+let login = new Date(data.account.created_at);
+
+html+=`<br><span class="text-sky-500">Created At: </span>${login.toString()}`
+
+if(data.account.lastUsernameChange != null){
+  login = new Date(data.account.lastUsernameChange)
+  html+=`<br><span class="text-sky-500">Last Username Change: </span>${login.toString()}`
+}
+
+html +=`<br><span class="text-sky-500">Legecy Secret: </span> <span class="blur-sm hover:blur-none"> ${data.account.secret}</span>`
 
 html+="</p>"
 userInfo.innerHTML = html;
