@@ -72,7 +72,7 @@ html += `<span class="text-sky-500">gems:</span> ${prettyNum(
 )}`;
 
 if (data.account.email != "") {
-  html += `<br><span class="text-sky-500">email:</span> ${data.account.email}`;
+  html += `<br><span class="text-sky-500">email:</span> <span class="blur-lg hover:blur-none">${data.account.email}</span>`;
 }
 
 html += `<br><span class="text-sky-500">Subscription:</span> ${data.account.subscription}`;
@@ -99,7 +99,7 @@ if(data.account.lastUsernameChange != null){
   html+=`<br><span class="text-sky-500">Last Username Change: </span>${login.toString()}`
 }
 
-html +=`<br><span class="text-sky-500">Legecy Secret: </span> <span class="blur-sm hover:blur-none"> ${data.account.secret}</span>`
+html +=`<br><span class="text-sky-500">Legecy Secret: </span> <span class="blur-2xl hover:blur-none"> ${data.account.secret}</span>`
 
 html+="</p>"
 userInfo.innerHTML = html;
