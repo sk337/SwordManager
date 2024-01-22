@@ -29,9 +29,7 @@ export async function login(username, password){
     }),
   });
   const data = await login.json();
-  if (data.hasOwnProperty("error")){
-    
-  }
+  return data
 }
 
 export async function tokenlogin(username, password){
@@ -43,6 +41,14 @@ export async function tokenlogin(username, password){
     }
   });
   const data = await login.json();
-  console.log(data, login.status);
+  // console.log(data, login.status);
+  return data;
+}
+
+export async function getPubInfo(username){
+  const pub = await fetch(ApiUrl + "profile/getPublicUserInfo/" + username, {
+    method: "POST",
+  });
+  const data = await pub.json();
   return data;
 }
