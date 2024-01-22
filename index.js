@@ -121,7 +121,12 @@ function id2skin(id){
 
 html = "<p><span class=\"font-bold\">Skins</span><br/>";
 
-html += `<span class="text-sky-500">Equiped Skin: </span><br/><span class="text-green-500">${id2skin(data.account.skins.equipped).name} (id:${data.account.skins.equipped})</span><br/>`;
+let ogs ="";
+if(id2skin(data.account.skins.equipped).og){
+  ogs="<span class=\"text-red-500\">(OG)</span>"
+}
+
+html += `<span class="text-sky-500">Equiped Skin: </span><br/><span class="text-green-500">${id2skin(data.account.skins.equipped).name} (id:${data.account.skins.equipped}) ${ogs}</span><br/>`;
 
 html += '<span class="text-sky-500">OwnedSkins: </span><br/>';
 
