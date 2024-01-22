@@ -37,11 +37,12 @@ jobs:
         uses: actions/configure-pages@v4
       - name: installing deps
         run: npm i
+      - name: Builing Website
+        run: npm un build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository
-          path: '.'
+          path: './dist'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
