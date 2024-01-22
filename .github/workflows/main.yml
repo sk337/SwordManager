@@ -38,7 +38,7 @@ jobs:
       - name: installing deps
         run: npm i
       - name: Builing Website
-        run: npm un build
+        run: npm run build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
