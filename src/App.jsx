@@ -210,13 +210,13 @@ export default function App() {
                 <p>
                   <span className="font-bold">Total:</span>
                   <br />
-                  <span className="text-sky-500">kills: </span>
+                  &nbsp;&nbsp;<span className="text-sky-500">kills: </span>
                   {prettyNum(pubInfo.totalStats.kills)}
                   <br />
-                  <span className="text-sky-500">playTime: </span>
+                  &nbsp;&nbsp;<span className="text-sky-500">playTime: </span>
                   {playtimeParse(pubInfo.totalStats.playtime)}
                   <br />
-                  <span className="text-sky-500">rank: </span>
+                  &nbsp;&nbsp;<span className="text-sky-500">rank: </span>
                   {prettyNum(pubInfo.rank)}
                   <br />
                 </p>
