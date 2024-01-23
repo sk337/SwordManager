@@ -83,7 +83,7 @@ export default function App() {
   if (isLogin == false) {
     return (
       <main className="flex flex-col items-center justify-center">
-        <div className="flex flex-wrap items-center justify-center w-1/2 mt-10">
+        <div className="flex flex-wrap items-center justify-center w-3/5 mt-10">
           <Alert id="error" className="bg-red-500 hidden">
             <AlertTitle>Error</AlertTitle>
             <hr className="text-white" />
@@ -101,9 +101,10 @@ export default function App() {
                 id="password"
                 placeholder="Password"
                 type="password"
+                className="mt-3"
               ></Input>
               <Button
-                className="text-center mt-5 bg-blue-500 hover:bg-blue-600"
+                className="text-center mt-5 w-full bg-blue-500 hover:bg-blue-600"
                 onClick={flogin}
               >
                 Login
