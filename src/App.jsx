@@ -249,7 +249,7 @@ export default function App() {
       method: "POST",
       headers: {
         Authorization: "bearer " + window.localStorage.getItem("token"),
-        "Content-Type": "appliction/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         token: window.localStorage.getItem("token"),
@@ -263,7 +263,7 @@ export default function App() {
           return;
         }
         alert(`skin equipped: ${id2skin(eskin).name}`);
-        // window.location.reload();
+        window.location.reload();
       });
     });
   }
