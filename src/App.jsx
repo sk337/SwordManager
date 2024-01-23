@@ -36,14 +36,14 @@ import {
 } from "@/components/ui/select";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
-import loading from "@/loading.svg";
-
 export default function App() {
   const ApiUrl = "https://sb-api-fb48ef34a197.herokuapp.com/";
 
   const [isLogin, setIsLogin] = useState("load");
   const [userData, setUserData] = useState(false);
   const [pubInfo, setPubInfo] = useState(false);
+  const [skin, setSkin] = useState(false);
+  const [eskin, setEskin] = useState(false);
   // Use effect to fetch the login status when the component mounts
   useEffect(() => {
     const fetchLoginStatus = async () => {
@@ -66,13 +66,12 @@ export default function App() {
   function flogin() {
     login(
       document.getElementById("username").value,
-      document.getElementById("password").value
+      document.getElementById("password").value,
     ).then((res) => {
       if (res.error) {
         document.getElementById("error").classList.remove("hidden");
-        document.getElementById(
-          "desc"
-        ).innerHTML = `${res.error}: ${res.message}`;
+        document.getElementById("desc").innerHTML =
+          `${res.error}: ${res.message}`;
       } else {
         window.localStorage.setItem("token", res.token);
         window.location.reload();
@@ -209,10 +208,65 @@ export default function App() {
     });
   }
 
+  // function setSkin(sskin){
+  //   setSkin(sskin)
+  // }
+
   function buySkin() {
-    let skin = document.getElementById("skin").value;
+    if (!skin) {
+      alert("Please select a skin");
+      return;
+    }
+    fetch(`${ApiUrl}profile/cosmetics/skins/buy/${skin}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "bearer " + window.localStorage.getItem("token"),
+      },
+      body: JSON.stringify({
+        token: window.localStorage.getItem("token"),
+      }),
+    }).then((req) => {
+      console.log(req);
+      req.json().then((obj) => {
+        console.log(obj);
+        if (Object.prototype.hasOwnProperty.call(obj, "error")) {
+          alert(`buy failed: ${obj.error}`);
+          return;
+        }
+        alert(`skin bought: ${id2skin(skin).name}`);
+        window.location.reload();
+      });
+    });
   }
 
+  function equipSkin() {
+    if (!eskin) {
+      alert("Please select a skin");
+      return;
+    }
+    fetch(`${ApiUrl}profile/cosmetics/skins/equip/${eskin}`, {
+      method: "POST",
+      headers: {
+        Authorization: "bearer " + window.localStorage.getItem("token"),
+        "Content-Type": "appliction/json",
+      },
+      body: JSON.stringify({
+        token: window.localStorage.getItem("token"),
+      }),
+    }).then((req) => {
+      req.json().then((obj) => {
+        console.log(req)
+        console.log(obj)
+        if (Object.prototype.hasOwnProperty.call(obj, "error")) {
+          alert(`equip failed: ${obj.error}`);
+          return;
+        }
+        alert(`skin equipped: ${id2skin(eskin).name}`);
+        // window.location.reload();
+      });
+    });
+  }
   // console.log(pubInfo)
   if (userData && pubInfo) {
     console.log(pubInfo);
@@ -279,10 +333,10 @@ export default function App() {
                 </p>
                 <div className="flex flex-row w-full mt-5">
                   <Sheet className="w-full">
-                    <SheetTrigger className="w-full ">
+                    <SheetTrigger className="w-full">
                       <Button className="w-full">Manage Account</Button>
                     </SheetTrigger>
-                    <SheetContent>
+                    <SheetContent className="overflow-x-auto">
                       <p className="text-3xl font-bold m-3">Settings</p>
 
                       <p className="font-bold mt-5">Change Username</p>
@@ -310,7 +364,10 @@ export default function App() {
                         <span className="text-sky-500">Gems: </span>
                         {prettyNum(userData.account.gems)}
                       </p>
-                      <Select className="mt-10">
+                      <Select
+                        className="mt-10"
+                        onValueChange={(value) => setSkin(value)}
+                      >
                         <SelectTrigger className="w-[180px] mt-3">
                           <SelectValue placeholder="Select a Skin " />
                         </SelectTrigger>
@@ -321,7 +378,7 @@ export default function App() {
                               if (
                                 !skin.og &&
                                 !userData.account.skins.owned.includes(
-                                  skin.id
+                                  skin.id,
                                 ) &&
                                 skin.price <= userData.account.gems
                               ) {
@@ -338,7 +395,51 @@ export default function App() {
                           </SelectGroup>
                         </SelectContent>
                       </Select>
-                      <Button className="mt-3">Buy</Button>
+                      <Button className="mt-3" onClick={buySkin}>
+                        Buy
+                      </Button>
+                      <p className="font-bold mt-5">Equip Skin</p>
+                      <hr />
+                      <Select
+                        className="mt-10"
+                        onValueChange={(value) => setEskin(value)}
+                      >
+                        <SelectTrigger className="w-[180px] mt-3">
+                          <SelectValue placeholder="Select a Skin" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectLabel>Skins</SelectLabel>
+                            {cosmetics.skins.map((skin) => {
+                              if (
+                                userData.account.skins.owned.includes(skin.id)
+                              ) {
+                                return (
+                                  <SelectItem key={skin.id} value={skin.id}>
+                                    {skin.name}{" "}
+                                    {skin.og ? (
+                                      <span className="text-red-500">(OG)</span>
+                                    ) : (
+                                      ""
+                                    )}{" "}
+                                    {skin.id ==
+                                    userData.account.skins.equipped ? (
+                                      <span className="text-green-500">
+                                        (Equipped)
+                                      </span>
+                                    ) : (
+                                      ""
+                                    )}
+                                  </SelectItem>
+                                );
+                              }
+                            })}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                      <Button className="mt-3" onClick={equipSkin}>
+                        Equip Skin
+                      </Button>
                     </SheetContent>
                   </Sheet>
                 </div>
@@ -423,7 +524,7 @@ export default function App() {
     return (
       <main>
         <h1 className="m-5 text-3xl font-bold text-center">Loading...</h1>
-        <svg src={loading} className="m-5 animate-spin" alt="loading" />
+        <p className="font-symbol text-center text-6xl animate-spin"></p>
       </main>
     );
   }

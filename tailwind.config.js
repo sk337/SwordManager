@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
   darkMode: ["class"],
   content: [
@@ -6,6 +7,7 @@ module.exports = {
     './components/**/*.{ts,tsx,js,jsx}',
     './app/**/*.{ts,tsx,js,jsx}',
     './src/**/*.{ts,tsx,js,jsx}',
+
   ],
   prefix: "",
   theme: {
@@ -70,6 +72,9 @@ module.exports = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+      },
+      fontFamily: {
+        'symbol': ['nf-symbol', 'sans-serif'],
       },
     },
   },
