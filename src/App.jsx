@@ -157,7 +157,7 @@ export default function App() {
       alert("Please fill out all fields");
       return;
     } else if (oldUsername !== newUsername) {
-      alert("Username must match");
+      alert("Usernames must match");
       return;
     }
 
@@ -197,6 +197,8 @@ export default function App() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
+                // may need to get a new token ? alert("Username changed");
+                window.location.reload();
                 <p>
                   <span className="text-sky-500">Username: </span>
                   {userData.account.username}
