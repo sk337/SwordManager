@@ -1,4 +1,3 @@
-export default config = {
+export default {
   base: '',
-  
 }

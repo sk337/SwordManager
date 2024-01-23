@@ -16,11 +16,11 @@ export default function Nav(){
     <NavigationMenu className="m-5 text-center">
       <NavigationMenuList>
         <NavigationMenuItem>
-          <a href={config.base + "/#/"}>Home</a>
+          <a href="#/">Home</a>
         </NavigationMenuItem>
         <NavigationMenuItem>|</NavigationMenuItem>
         <NavigationMenuItem>
-          <a href={config.base + "/#/leaderboard"}>Leaderboard</a>
+          <a href="#/leaderboard">Leaderboard</a>
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
