@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "@/App.css";
 import { checkLogin, tokenlogin, getPubInfo, login } from "@/utils/login";
 import cosmetics from "../cosmetics.json";
 import {

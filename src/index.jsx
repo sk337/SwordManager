@@ -1,13 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { RouterProvider, createHashRouter } from "react-router-dom";
 import App from "./App";
-// import Login from './Login'
+import "@/App.css"
+import Leaderboard from './Leaderboard'
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-console.log(window.location.hash);
+console.log(window.location.hash.toLowerCase());
 
-if (window.location.hash == "#/leaderboard") {
+if (window.location.hash.toLowerCase() == "#leaderboard") {
+  root.render(
+    <React.StrictMode>
+      <Leaderboard />
+    </React.StrictMode>
+  )
 } else {
   root.render(
     <React.StrictMode>
