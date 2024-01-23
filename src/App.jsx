@@ -36,6 +36,10 @@ import {
 } from "@/components/ui/select";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
+import Login from './Login';
+
+import Nav from "@/components/nav"
+
 export default function App() {
   const ApiUrl = "https://sb-api-fb48ef34a197.herokuapp.com/";
 
@@ -80,41 +84,7 @@ export default function App() {
   }
 
   if (isLogin == false) {
-    return (
-      <main className="flex flex-col items-center justify-center">
-        <div className="flex flex-wrap items-center justify-center w-2/5 mt-10">
-          <Alert id="error" className="bg-red-500 hidden">
-            <AlertTitle>Error</AlertTitle>
-            <hr className="text-white" />
-            <AlertDescription id="desc">
-              Invalid Username or Password
-            </AlertDescription>
-          </Alert>
-          <Card className="w-full">
-            <CardHeader>
-              <CardTitle className=" text-center">
-                Login With Swordbattle
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <Input id="username" placeholder="Username"></Input>
-              <Input
-                id="password"
-                placeholder="Password"
-                type="password"
-                className="mt-3"
-              ></Input>
-              <Button
-                className="text-center mt-5 w-full bg-blue-500 hover:bg-blue-600"
-                onClick={flogin}
-              >
-                Login
-              </Button>
-            </CardContent>
-          </Card>
-        </div>
-      </main>
-    );
+    return (<Login />);
   }
 
   function playtimeParse(seconds) {
@@ -272,6 +242,7 @@ export default function App() {
     console.log(pubInfo);
     return (
       <main>
+        <Nav/>
         <h1 className="text-3xl font-bold text-center p-5">Sword Manager</h1>
         <div className="flex flex-wrap w-full items-top justify-center p-2 h-full">
           <div className="flex flex-col w-2/5 m-3">
