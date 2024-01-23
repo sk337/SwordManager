@@ -25,6 +25,16 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 import loading from "@/loading.svg";
 
 export default function App() {
@@ -183,6 +193,10 @@ export default function App() {
     });
   }
 
+  function buySkin() {
+    let skin = document.getElementById("skin").value;
+  }
+
   // console.log(pubInfo)
   if (userData && pubInfo) {
     return (
@@ -197,8 +211,6 @@ export default function App() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                // may need to get a new token ? alert("Username changed");
-                window.location.reload();
                 <p>
                   <span className="text-sky-500">Username: </span>
                   {userData.account.username}
@@ -248,9 +260,9 @@ export default function App() {
                   </span>
                   <br />
                   <div className="flex flex-row w-full mt-5">
-                    <Sheet className="w-full mr-2">
+                    <Sheet className="w-full">
                       <SheetTrigger className="w-full ">
-                        <Button className="w-full">Settings</Button>
+                        <Button className="w-full">Manage Account</Button>
                       </SheetTrigger>
                       <SheetContent>
                         <p className="text-3xl font-bold m-3">Settings</p>
@@ -273,10 +285,44 @@ export default function App() {
                         <Button className="mt-5" onClick={changeUsername}>
                           Submit
                         </Button>
+
+                        <p className="font-bold mt-5">Buy Skin</p>
+                        <hr />
+                        <p>
+                          <span class="text-sky-500">Gems: </span>
+                          {prettyNum(userData.account.gems)}
+                        </p>
+                        <Select className="mt-10">
+                          <SelectTrigger className="w-[180px] mt-3">
+                            <SelectValue placeholder="Select a Skin " />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectGroup>
+                              <SelectLabel>Skins</SelectLabel>
+                              {cosmetics.skins.map((skin) => {
+                                if (
+                                  !skin.og &&
+                                  !userData.account.skins.owned.includes(
+                                    skin.id
+                                  ) &&
+                                  skin.price <= userData.account.gems
+                                ) {
+                                  return (
+                                    <SelectItem key={skin.id} value={skin.id}>
+                                      {skin.name}{" "}
+                                      <span className="text-sky-500">
+                                        {skin.price}
+                                      </span>
+                                    </SelectItem>
+                                  );
+                                }
+                              })}
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
+                        <Button></Button>
                       </SheetContent>
                     </Sheet>
-
-                    <Button className="w-full ml-2">test</Button>
                   </div>
                   <Button
                     className="bg-blue-500 hover:bg-blue-600 mt-5 text-center w-full"
