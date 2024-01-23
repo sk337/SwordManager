@@ -34,6 +34,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 import loading from "@/loading.svg";
 
@@ -68,7 +69,10 @@ export default function App() {
       document.getElementById("password").value
     ).then((res) => {
       if (res.error) {
-        alert(`login failed: ${res.message}`);
+        document.getElementById("error").classList.remove("hidden");
+        document.getElementById(
+          "desc"
+        ).innerHTML = `${res.error}: ${res.message}`;
       } else {
         window.localStorage.setItem("token", res.token);
         window.location.reload();
@@ -78,25 +82,34 @@ export default function App() {
 
   if (isLogin == false) {
     return (
-      <main className="flex items-center justify-center">
-        <div className="flex flex-wrap items-center justify-center w-3/4 mt-10">
-          <Toaster />
-          <h1 className="text-3xl m-4 mb-7 font-bold text-center">
-            Login With Swordbattle
-          </h1>
-          <Input id="username" placeholder="Username"></Input>
-          <Input
-            className="mt-5"
-            id="password"
-            placeholder="Password"
-            type="password"
-          ></Input>
-          <Button
-            className="text-center mt-5 bg-blue-500 hover:bg-blue-600"
-            onClick={flogin}
-          >
-            Login
-          </Button>
+      <main className="flex flex-col items-center justify-center">
+        <div className="flex flex-wrap items-center justify-center w-1/2 mt-10">
+          <Alert id="error" className="bg-red-500 hidden">
+            <AlertTitle>Error</AlertTitle>
+            <hr className="text-white" />
+            <AlertDescription id="desc">
+              Invalid Username or Password
+            </AlertDescription>
+          </Alert>
+          <Card>
+            <CardHeader>
+              <CardTitle>Login With Swordbattle</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Input id="username" placeholder="Username"></Input>
+              <Input
+                id="password"
+                placeholder="Password"
+                type="password"
+              ></Input>
+              <Button
+                className="text-center mt-5 bg-blue-500 hover:bg-blue-600"
+                onClick={flogin}
+              >
+                Login
+              </Button>
+            </CardContent>
+          </Card>
         </div>
       </main>
     );
@@ -199,6 +212,7 @@ export default function App() {
 
   // console.log(pubInfo)
   if (userData && pubInfo) {
+    console.log(pubInfo);
     return (
       <main>
         <h1 className="text-3xl font-bold text-center p-5">Sword Manager</h1>
@@ -259,78 +273,78 @@ export default function App() {
                     {userData.account.secret}
                   </span>
                   <br />
-                  <div className="flex flex-row w-full mt-5">
-                    <Sheet className="w-full">
-                      <SheetTrigger className="w-full ">
-                        <Button className="w-full">Manage Account</Button>
-                      </SheetTrigger>
-                      <SheetContent>
-                        <p className="text-3xl font-bold m-3">Settings</p>
-
-                        <p className="font-bold mt-5">Change Username</p>
-                        <hr />
-                        <Label htmlFor="ou">Old Username</Label>
-                        <Input
-                          name="ou"
-                          id="oldUsername"
-                          placeholder="Original Username"
-                        ></Input>
-
-                        <Label htmlFor="nu">New Username</Label>
-                        <Input
-                          name="nu"
-                          id="newUsername"
-                          placeholder="New Username"
-                        ></Input>
-                        <Button className="mt-5" onClick={changeUsername}>
-                          Submit
-                        </Button>
-
-                        <p className="font-bold mt-5">Buy Skin</p>
-                        <hr />
-                        <p>
-                          <span class="text-sky-500">Gems: </span>
-                          {prettyNum(userData.account.gems)}
-                        </p>
-                        <Select className="mt-10">
-                          <SelectTrigger className="w-[180px] mt-3">
-                            <SelectValue placeholder="Select a Skin " />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectGroup>
-                              <SelectLabel>Skins</SelectLabel>
-                              {cosmetics.skins.map((skin) => {
-                                if (
-                                  !skin.og &&
-                                  !userData.account.skins.owned.includes(
-                                    skin.id
-                                  ) &&
-                                  skin.price <= userData.account.gems
-                                ) {
-                                  return (
-                                    <SelectItem key={skin.id} value={skin.id}>
-                                      {skin.name}{" "}
-                                      <span className="text-sky-500">
-                                        {skin.price}
-                                      </span>
-                                    </SelectItem>
-                                  );
-                                }
-                              })}
-                            </SelectGroup>
-                          </SelectContent>
-                        </Select>
-                        <Button></Button>
-                      </SheetContent>
-                    </Sheet>
-                  </div>
-                  <Button
-                    className="bg-blue-500 hover:bg-blue-600 mt-5 text-center w-full"
-                    onClick={logout}
-                  >
-                    Logout
-                  </Button>
                 </p>
+                <div className="flex flex-row w-full mt-5">
+                  <Sheet className="w-full">
+                    <SheetTrigger className="w-full ">
+                      <Button className="w-full">Manage Account</Button>
+                    </SheetTrigger>
+                    <SheetContent>
+                      <p className="text-3xl font-bold m-3">Settings</p>
+
+                      <p className="font-bold mt-5">Change Username</p>
+                      <hr />
+                      <Label htmlFor="ou">Old Username</Label>
+                      <Input
+                        name="ou"
+                        id="oldUsername"
+                        placeholder="Original Username"
+                      ></Input>
+
+                      <Label htmlFor="nu">New Username</Label>
+                      <Input
+                        name="nu"
+                        id="newUsername"
+                        placeholder="New Username"
+                      ></Input>
+                      <Button className="mt-5" onClick={changeUsername}>
+                        Submit
+                      </Button>
+
+                      <p className="font-bold mt-5">Buy Skin</p>
+                      <hr />
+                      <p>
+                        <span className="text-sky-500">Gems: </span>
+                        {prettyNum(userData.account.gems)}
+                      </p>
+                      <Select className="mt-10">
+                        <SelectTrigger className="w-[180px] mt-3">
+                          <SelectValue placeholder="Select a Skin " />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectLabel>Skins</SelectLabel>
+                            {cosmetics.skins.map((skin) => {
+                              if (
+                                !skin.og &&
+                                !userData.account.skins.owned.includes(
+                                  skin.id
+                                ) &&
+                                skin.price <= userData.account.gems
+                              ) {
+                                return (
+                                  <SelectItem key={skin.id} value={skin.id}>
+                                    {skin.name}{" "}
+                                    <span className="text-sky-500">
+                                      {skin.price}
+                                    </span>
+                                  </SelectItem>
+                                );
+                              }
+                            })}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                      <Button className="mt-3">Buy</Button>
+                    </SheetContent>
+                  </Sheet>
+                </div>
+                <Button
+                  className="bg-blue-500 hover:bg-blue-600 mt-5 text-center w-full"
+                  onClick={logout}
+                >
+                  Logout
+                </Button>
               </CardContent>
             </Card>
             <Card>
@@ -350,6 +364,11 @@ export default function App() {
                   &nbsp;&nbsp;<span className="text-sky-500">rank: </span>
                   {prettyNum(pubInfo.rank)}
                   <br />
+                  &nbsp;&nbsp;<span className="text-sky-500">coins: </span>
+                  {prettyNum(pubInfo.totalStats.coins)}
+                  <br />
+                  &nbsp;&nbsp;<span className="text-sky-500">games: </span>
+                  {prettyNum(pubInfo.totalStats.games)}
                 </p>
               </CardContent>
             </Card>
