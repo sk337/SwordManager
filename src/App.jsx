@@ -83,7 +83,7 @@ export default function App() {
   if (isLogin == false) {
     return (
       <main className="flex flex-col items-center justify-center">
-        <div className="flex flex-wrap items-center justify-center w-3/5 mt-10">
+        <div className="flex flex-wrap items-center justify-center w-2/5 mt-10">
           <Alert id="error" className="bg-red-500 hidden">
             <AlertTitle>Error</AlertTitle>
             <hr className="text-white" />
@@ -91,9 +91,11 @@ export default function App() {
               Invalid Username or Password
             </AlertDescription>
           </Alert>
-          <Card>
+          <Card className="w-full">
             <CardHeader>
-              <CardTitle>Login With Swordbattle</CardTitle>
+              <CardTitle className=" text-center">
+                Login With Swordbattle
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <Input id="username" placeholder="Username"></Input>
