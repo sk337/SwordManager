@@ -13,12 +13,23 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Toast } from "@/components/ui/toast";
 import { Toaster } from "@/components/ui/toaster";
-import { useToast } from "@/components/ui/use-toast";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+
 import loading from "@/loading.svg";
 
 export default function App() {
+  const ApiUrl = "https://sb-api-fb48ef34a197.herokuapp.com/";
+
   const [isLogin, setIsLogin] = useState("load");
   const [userData, setUserData] = useState(false);
   const [pubInfo, setPubInfo] = useState(false);
@@ -41,15 +52,18 @@ export default function App() {
     fetchUserData();
   }, []);
 
-  function flogin(){
-    login(document.getElementById("username").value, document.getElementById("password").value).then( res => {
-        if (res.error){
-          alert(`login failed: ${res.message}`)
-        } else {
-          window.localStorage.setItem("token",res.token)
-          window.location.reload()
-        }
-      });
+  function flogin() {
+    login(
+      document.getElementById("username").value,
+      document.getElementById("password").value
+    ).then((res) => {
+      if (res.error) {
+        alert(`login failed: ${res.message}`);
+      } else {
+        window.localStorage.setItem("token", res.token);
+        window.location.reload();
+      }
+    });
   }
 
   if (isLogin == false) {
@@ -61,7 +75,12 @@ export default function App() {
             Login With Swordbattle
           </h1>
           <Input id="username" placeholder="Username"></Input>
-          <Input className="mt-5" id="password" placeholder="Password" type="password"></Input>
+          <Input
+            className="mt-5"
+            id="password"
+            placeholder="Password"
+            type="password"
+          ></Input>
           <Button
             className="text-center mt-5 bg-blue-500 hover:bg-blue-600"
             onClick={flogin}
@@ -131,6 +150,39 @@ export default function App() {
     window.location.reload();
   }
 
+  function changeUsername() {
+    let oldUsername = document.getElementById("oldUsername").value;
+    let newUsername = document.getElementById("newUsername").value;
+    if (oldUsername == "" || newUsername == "") {
+      alert("Please fill out all fields");
+      return;
+    } else if (oldUsername !== newUsername) {
+      alert("Username must match");
+      return;
+    }
+
+    fetch(`${ApiUrl}/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify({
+        newUsername: newUsername,
+      }),
+    }).then((res) => {
+      if (res.status == 200) {
+        res.json().then((data) => {
+          //Changing username resets the token
+          window.localStorage.setItem("token", data.token);
+          window.location.reload();
+        });
+      } else {
+        alert("Username change failed");
+      }
+    });
+  }
+
   // console.log(pubInfo)
   if (userData && pubInfo) {
     return (
@@ -193,6 +245,37 @@ export default function App() {
                     {userData.account.secret}
                   </span>
                   <br />
+                  <div className="flex flex-row w-full mt-5">
+                    <Sheet className="w-full mr-2">
+                      <SheetTrigger className="w-full ">
+                        <Button className="w-full">Settings</Button>
+                      </SheetTrigger>
+                      <SheetContent>
+                        <p className="text-3xl font-bold m-3">Settings</p>
+
+                        <p className="font-bold mt-5">Change Username</p>
+                        <hr />
+                        <Label htmlFor="ou">Old Username</Label>
+                        <Input
+                          name="ou"
+                          id="oldUsername"
+                          placeholder="Original Username"
+                        ></Input>
+
+                        <Label htmlFor="nu">New Username</Label>
+                        <Input
+                          name="nu"
+                          id="newUsername"
+                          placeholder="New Username"
+                        ></Input>
+                        <Button className="mt-5" onClick={changeUsername}>
+                          Submit
+                        </Button>
+                      </SheetContent>
+                    </Sheet>
+
+                    <Button className="w-full ml-2">test</Button>
+                  </div>
                   <Button
                     className="bg-blue-500 hover:bg-blue-600 mt-5 text-center w-full"
                     onClick={logout}
