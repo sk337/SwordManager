@@ -109,8 +109,6 @@ export default function Leaderboard() {
                       if (ud.error) {
                         console.log("Error: ", ud.error);
                       } else {
-                        let image= await import(`../vendor/swordbattle.io/client/public/assets/game/player/${id2skin(ud.account.skins.equipped).bodyFileName.split(".")[0]}.png`)
-                        ud["image"] = image.default;
                         setProfiles(profiles =>[...profiles, ud]);
                       }
                     })}>

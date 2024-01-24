@@ -1,5 +1,7 @@
 const ApiUrl = "https://sb-api-fb48ef34a197.herokuapp.com/";
 
+import {id2skin} from "./jsutils"
+
 export async function checkLogin(){
 if (window.localStorage.getItem("token") !== null) {
   let account = await fetch(ApiUrl + "auth/account", {
@@ -50,5 +52,9 @@ export async function getPubInfo(username){
     method: "POST",
   });
   const data = await pub.json();
+  if (!data.hasOwnProperty("error")) {
+    let image= await import(`../../vendor/swordbattle.io/client/public/assets/game/player/${id2skin(data.account.skins.equipped).bodyFileName.split(".")[0]}.png`)
+    data["image"] = image.default;
+  }
   return data;
 }

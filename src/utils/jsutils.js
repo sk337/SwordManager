@@ -35,3 +35,22 @@ export function id2skin(id) {
     }
   }
 }
+
+export function dateParse(dates){
+  let date = new Date(dates).toString().split(" ");
+  let monthMap= {
+    "Jan": "January",
+    "Feb": "February",
+    "Mar": "March",
+    "Apr": "April",
+    "May": "May",
+    "Jun": "June",
+    "Jul": "July",
+    "Aug": "August",
+    "Sep": "September",
+    "Oct": "October",
+    "Nov": "November",
+    "Dec": "December"
+  }
+  return `${monthMap[date[1]]} ${date[2]} ${date[3]}`;
+}

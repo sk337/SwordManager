@@ -6,27 +6,10 @@ import {
 } from "@/components/ui/hover-card";
 import { CalendarDays } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { id2skin } from "@/utils/jsutils";
+import { id2skin, dateParse } from "@/utils/jsutils";
 
 export default function UserCard({ user, children }) {
-  function dateparse(){
-    let date = new Date(user.account.created_at).toString().split(" ");
-    let monthMap= {
-      "Jan": "January",
-      "Feb": "February",
-      "Mar": "March",
-      "Apr": "April",
-      "May": "May",
-      "Jun": "June",
-      "Jul": "July",
-      "Aug": "August",
-      "Sep": "September",
-      "Oct": "October",
-      "Nov": "November",
-      "Dec": "December"
-    }
-    return `${monthMap[date[1]]} ${date[2]} ${date[3]}`;
-  }
+  
   if (user == "empty") {
     return (
       <HoverCard>
@@ -53,14 +36,17 @@ export default function UserCard({ user, children }) {
               <AvatarFallback>VC</AvatarFallback>
             </Avatar>
             <div className="space-y-1">
-              <h4 className="text-sm font-semibold">@{user.account.username}</h4>
+              <a className="text-sm font-semibold" href="#" onClick={()=>{
+                window.location.hash = `#profile?user=${encodeURIComponent(user.account.username)}`;
+                window.location.reload();
+              }}>@{user.account.username}</a>
               <p className="text-sm">
                 If Gautam adds bios it will go here
               </p>
               <div className="flex items-center pt-2">
                 <CalendarDays className="mr-2 h-4 w-4 opacity-70" />{" "}
                 <span className="text-xs text-muted-foreground">
-                  Joined {dateparse()}
+                  Joined {dateParse(user.account.created_at)}
                 </span>
               </div>
             </div>
