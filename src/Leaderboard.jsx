@@ -14,14 +14,16 @@ import { ranges, types, rangeLst, typeLst, getLeaderboard } from "@/utils/leader
 import { id2skin, prettyNum, playtimeParse } from "@/utils/jsutils";
 import { getPubInfo } from "@/utils/login";
 
+
 import UserCard from "@/components/usercard";
 
 export default function Leaderboard() {
+
   const [leaderboard, setLeaderboard] = useState([]);
   const [profiles, setProfiles] = useState([]);
   const [range, setRange] = useState("all");
   const [type, setType] = useState("xp");
-
+  // console.log(images)
   function userChk(e){
     let res = "empty";
     if (profiles.length === 0) {
@@ -107,7 +109,7 @@ export default function Leaderboard() {
                       if (ud.error) {
                         console.log("Error: ", ud.error);
                       } else {
-                        let image= await import(`../vendor/swordbattle.io/client/public/assets/game/player/${id2skin(ud.account.skins.equipped).bodyFileName}`)
+                        let image= await import(`../vendor/swordbattle.io/client/public/assets/game/player/${id2skin(ud.account.skins.equipped).bodyFileName.split(".")[0]}.png`)
                         ud["image"] = image.default;
                         setProfiles(profiles =>[...profiles, ud]);
                       }
