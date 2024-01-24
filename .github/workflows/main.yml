@@ -40,7 +40,9 @@ jobs:
       - name: add Config
         run: "echo export default {base: \\'SwordManager\\'} > src/config.js"
       - name: Builing Website
-        run: npm run build
+        run: | 
+          git submodule update --init --recursive
+          npm run build
         env:
           VITE_BASE_URL: "SwordManager"
       - name: Upload artifact
