@@ -14,6 +14,9 @@ export const ranges = {
   week: "Past Week",
 };
 
+export const rangeLst = [["all", "All-Time"], ["day", "Past Day"], ["week", "Past Week"]];
+export const typeLst = [["kills", "Kills"], ["coins", "Coins"], ["playtime", "Survived"], ["xp", "XP"], ["coins", "Total Coins"], ["kills", "Total Stabs"], ["playtime", "Total Playtime"]];
+
 const ApiUrl = "https://sb-api-fb48ef34a197.herokuapp.com/";
 
 export async function getLeaderboard(range, type) {

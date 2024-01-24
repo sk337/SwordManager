@@ -4,10 +4,12 @@ import {
   Select,
   SelectContent,
   SelectItem,
+  SelectGroup,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ranges, types, getLeaderboard } from "@/utils/leaderboard";
+import { ranges, types, rangeLst, typeLst, getLeaderboard } from "@/utils/leaderboard";
 
 import { id2skin, prettyNum, playtimeParse } from "@/utils/jsutils";
 import { getPubInfo } from "@/utils/login";
@@ -15,10 +17,8 @@ import { getPubInfo } from "@/utils/login";
 import UserCard from "@/components/usercard";
 
 export default function Leaderboard() {
-  const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
   const [leaderboard, setLeaderboard] = useState([]);
   const [profiles, setProfiles] = useState([]);
-  const [upd, setUpd] = useState(0);
   const [range, setRange] = useState("all");
   const [type, setType] = useState("xp");
 
@@ -52,10 +52,23 @@ export default function Leaderboard() {
         <Nav />
         <div className="flex flex-col items-center">
           <div className="felx flex-row items-center justify-center">
-            <Select>
+            <Select onValueChange={(val) => {setRange(val)}}>
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="All-Time" />
               </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Range</SelectLabel>
+                  {rangeLst.map((range) => (
+                    <SelectItem
+                      key={range[0]}
+                      value={range[0]}
+                    >
+                      {range[1]}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
             </Select>
             <Select>
               <SelectTrigger className="w-[180px] mt-5">
