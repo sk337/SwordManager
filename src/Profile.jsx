@@ -59,7 +59,7 @@ export default function Profile() {
                 <div className="flex items-center space-x-4">
                   <Avatar>
                     <AvatarImage src={user.image} />
-                    <AvatarFallback>VC</AvatarFallback>
+                    <AvatarFallback>AV</AvatarFallback>
                   </Avatar>
                   <div className="space-y-2">
                     <p>Joined: {dateParse(user.account.created_at)}</p>

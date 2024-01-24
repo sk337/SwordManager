@@ -33,10 +33,10 @@ export default function UserCard({ user, children }) {
           <div className="flex justify-between space-x-4">
             <Avatar>
               <AvatarImage src={user.image} />
-              <AvatarFallback>VC</AvatarFallback>
+              <AvatarFallback>{user.account.username.slice(0,2).toUpperCase()}</AvatarFallback>
             </Avatar>
             <div className="space-y-1">
-              <a className="text-sm font-semibold" href="#" onClick={()=>{
+              <a className="text-sm font-semibold underline" href="#" onClick={()=>{
                 window.location.hash = `#profile?user=${encodeURIComponent(user.account.username)}`;
                 window.location.reload();
               }}>@{user.account.username}</a>

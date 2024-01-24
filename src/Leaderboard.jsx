@@ -40,7 +40,7 @@ export default function Leaderboard() {
   useEffect(() => {
     const fetchLeaderboard = async () => {
       const data = await getLeaderboard(range, type);
-      console.log(data.length);
+      // console.log(data.length);
       
 
       setLeaderboard(data);
@@ -79,7 +79,7 @@ export default function Leaderboard() {
             </Select>
           </div>
           <p className="text-3xl text-center font-bold mt-5">Leaderboard</p>
-          <table className="mt-10 w-4/5">
+          <table className="mt-10 w-4/5 m-10">
             <thead>
               <tr>
                 <td>Username</td>
@@ -97,7 +97,7 @@ export default function Leaderboard() {
                   <tr key={tmp} className="m-5">
                     <td onMouseOver={( async (e)=>{
                       const username = e.target.childNodes[0].innerText;
-                      console.log(username)
+                      // console.log(username)
                       for (let i = 0; i < profiles.length; i++) {
                         if (profiles[i] === undefined) {
                         } else if (Object.prototype.hasOwnProperty.call(profiles[i], "account") && profiles[i].account.username === username){
