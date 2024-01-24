@@ -1,0 +1,3 @@
+[submodule "vendor/swordbattle.io"]
+	path = vendor/swordbattle.io
+	url = https://github.com/codergautam/swordbattle.io

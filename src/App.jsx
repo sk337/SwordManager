@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { checkLogin, tokenlogin, getPubInfo, login } from "@/utils/login";
-import cosmetics from "../cosmetics.json";
+import cosmetics from "@/../cosmetics.json";
 import {
   Card,
   CardContent,
@@ -33,11 +33,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
-import Login from './Login';
+import { id2skin, playtimeParse, prettyNum } from "@/utils/jsutils";
 
-import Nav from "@/components/nav"
+import Login from "./Login";
+
+import Nav from "@/components/nav";
 
 export default function App() {
   const ApiUrl = "https://sb-api-fb48ef34a197.herokuapp.com/";
@@ -69,12 +70,13 @@ export default function App() {
   function flogin() {
     login(
       document.getElementById("username").value,
-      document.getElementById("password").value,
+      document.getElementById("password").value
     ).then((res) => {
       if (res.error) {
         document.getElementById("error").classList.remove("hidden");
-        document.getElementById("desc").innerHTML =
-          `${res.error}: ${res.message}`;
+        document.getElementById(
+          "desc"
+        ).innerHTML = `${res.error}: ${res.message}`;
       } else {
         window.localStorage.setItem("token", res.token);
         window.location.reload();
@@ -83,44 +85,10 @@ export default function App() {
   }
 
   if (isLogin == false) {
-    return (<Login />);
+    return <Login />;
   }
 
-  function playtimeParse(seconds) {
-    let days = Math.floor(seconds / 86400);
-    let remainder = seconds % 86400;
-    let hours = Math.floor(remainder / 3600);
-    remainder %= 3600;
-    let minutes = Math.floor(remainder / 60);
-    let secs = remainder % 60;
-
-    let result = "";
-
-    if (days > 0) {
-      result += `${days}d `;
-    }
-    if (hours > 0 || days > 0) {
-      result += `${hours}h `;
-    }
-    if (minutes > 0 || hours > 0 || days > 0) {
-      result += `${minutes}m `;
-    }
-    result += `${secs}s`;
-
-    return result.trim();
-  }
-
-  function prettyNum(num) {
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  }
   // console.log(cosmetics)
-  function id2skin(id) {
-    for (let i = 0; i < cosmetics.skins.length; i++) {
-      if (cosmetics.skins[i].id == id) {
-        return cosmetics.skins[i];
-      }
-    }
-  }
 
   // console.log(userData)
   function email(userData) {
@@ -225,8 +193,8 @@ export default function App() {
       }),
     }).then((req) => {
       req.json().then((obj) => {
-        console.log(req)
-        console.log(obj)
+        console.log(req);
+        console.log(obj);
         if (Object.prototype.hasOwnProperty.call(obj, "error")) {
           alert(`equip failed: ${obj.error}`);
           return;
@@ -238,10 +206,9 @@ export default function App() {
   }
   // console.log(pubInfo)
   if (userData && pubInfo) {
-    console.log(pubInfo);
     return (
       <main>
-        <Nav/>
+        <Nav />
         <h1 className="text-3xl font-bold text-center p-5">Sword Manager</h1>
         <div className="flex flex-wrap w-full items-top justify-center p-2 h-full">
           <div className="flex flex-col w-2/5 m-3">
@@ -348,7 +315,7 @@ export default function App() {
                               if (
                                 !skin.og &&
                                 !userData.account.skins.owned.includes(
-                                  skin.id,
+                                  skin.id
                                 ) &&
                                 skin.price <= userData.account.gems
                               ) {
