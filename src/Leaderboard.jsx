@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useReducer } from "react";
 import Nav from "@/components/nav";
 import {
   Select,
@@ -15,21 +15,31 @@ import { getPubInfo } from "@/utils/login";
 import UserCard from "@/components/usercard";
 
 export default function Leaderboard() {
+  const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
   const [leaderboard, setLeaderboard] = useState([]);
-  const profiles = [];
+  const [profiles, setProfiles] = useState([]);
   const [upd, setUpd] = useState(0);
   const [range, setRange] = useState("all");
   const [type, setType] = useState("xp");
 
+  function userChk(e){
+    let res = "empty";
+    if (profiles.length === 0) {
+      return res;
+    }
+    for (let i = 0; i < profiles.length; i++) {
+      if (profiles[i] != undefined && profiles[i].account.username === e) {
+        return profiles[i];
+      }
+    }
+    return res;
+  }
+
   useEffect(() => {
     const fetchLeaderboard = async () => {
       const data = await getLeaderboard(range, type);
-      data.forEach(async (element) => {
-        let user = element.username;
-        let info = await getPubInfo(user);
-        profiles.push(info);
-        setUpd(upd + 1);
-      });
+      console.log(data.length);
+      
 
       setLeaderboard(data);
     };
@@ -70,16 +80,27 @@ export default function Leaderboard() {
                 total += 1;
                 return (
                   <tr key={tmp} className="m-5">
-                    <td>
-                      <UserCard
-                        user={
-                          Object.prototype.hasOwnProperty.call(
-                            profiles,
-                            user.username
-                          )
-                            ? profiles[user.username]
-                            : "empty"
+                    <td onMouseOver={( async (e)=>{
+                      const username = e.target.childNodes[0].innerText;
+                      console.log(username)
+                      for (let i = 0; i < profiles.length; i++) {
+                        if (profiles[i] === undefined) {
+                        } else if (Object.prototype.hasOwnProperty.call(profiles[i], "account") && profiles[i].account.username === username){
+                          return;
                         }
+                      }
+                  
+                      let ud = await getPubInfo(username);
+                      if (ud.error) {
+                        console.log("Error: ", ud.error);
+                      } else {
+                        let image= await import(`../vendor/swordbattle.io/client/public/assets/game/player/${id2skin(ud.account.skins.equipped).bodyFileName}`)
+                        ud["image"] = image.default;
+                        setProfiles(profiles =>[...profiles, ud]);
+                      }
+                    })}>
+                      <UserCard
+                        user={userChk(user.username)}
                       >
                         {user.username}
                       </UserCard>
