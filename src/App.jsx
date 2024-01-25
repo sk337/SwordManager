@@ -23,6 +23,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import {
   Select,
@@ -220,12 +221,22 @@ export default function App() {
               </CardHeader>
               <CardContent>
                 <p>
-                  <span className="text-sky-500">Username: </span>
-                  {userData.account.username}
-                  <br />
-                  <span className="text-sky-500">User ID: </span>
-                  {prettyNum(userData.account.id)}
-                  <br />
+                  <div className="flex items-center space-x-4">
+                    <Avatar>
+                      <AvatarImage src={pubInfo.image} />
+                      <AvatarFallback>AV</AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <p>
+                        <span className="text-sky-500">Username: </span>
+                        {userData.account.username}
+                      </p>
+                      <p>
+                        <span className="text-sky-500">User ID: </span>
+                        {prettyNum(userData.account.id)}
+                      </p>
+                    </div>
+                  </div>
                   <span className="text-sky-500">Gems: </span>
                   {prettyNum(userData.account.gems)}
                   <br />
