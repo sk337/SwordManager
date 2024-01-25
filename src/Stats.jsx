@@ -1,12 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { getPubInfo } from "@/utils/login";
-import { prettyNum } from "@/utils/jsutils";
+import { prettyNum, id2skin, dateParse, parseDailyStats } from "@/utils/jsutils";
 import cosmetics from "@/../cosmetics.json";
 import Nav from "@/components/nav";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { Line } from 'react-chartjs-2';
+
 
 export default function Stats() {
   const urlData = new URL("https://" + window.location.hash.replace("#", "q/"));
-  console.log(urlData);
+
   if (!urlData.searchParams.get("user")) {
     return (
       <main>
@@ -28,26 +45,65 @@ export default function Stats() {
   }, []);
 
   if (user && !user.error) {
+    let stats = parseDailyStats(user.dailyStats)
+    // console.log(user);
+    console.log(stats)
     return (
       <main>
         <Nav />
         <div className="w-full flex items-center justify-center p-5">
           <div className="w-4/5">
             <p className="text-3xl font-bold text-center">Stats</p>
+            <img src={user.image} className="rounded-full w-[60px]"></img>
             <p className="font-bold text-2xl">{user.account.username}</p>
             <p className="text-green-500">General:</p>
             <p>
               <span className="text-sky-500">&nbsp;&nbsp;Skins: </span>
-              <span className="text-orange-400">
-                {user.account.skins.owned.length}
-              </span>{" "}
+              <HoverCard>
+                <HoverCardTrigger>
+                  <span className="text-orange-400">
+                    {user.account.skins.owned.length}
+                  </span>
+                </HoverCardTrigger>
+                <HoverCardContent className="max-h-[300px] overflow-x-auto">
+                  {user.account.skins.owned.map((skin) => {
+                    let skinCont = id2skin(skin);
+                    return (
+                      <span key={skin}>
+                        <span>{skinCont.name} </span>
+                        <span className="text-sky-500">OG: </span>
+                        {skinCont.og ? "T" : "F"}
+                        <br />
+                      </span>
+                    );
+                  })}
+                </HoverCardContent>
+              </HoverCard>{" "}
               /{" "}
               <span className="text-orange-400">{cosmetics.skins.length}</span>
               <br />
-              <span className="text-sky-500">&nbsp;&nbsp;ranks: </span>
+              <span className="text-sky-500">&nbsp;&nbsp;rank: </span>
               <span className="text-orange-400">{prettyNum(user.rank)}</span>
               <br />
-              
+              <span className="text-sky-500">&nbsp;&nbsp;User Id: </span>
+              <span className="text-orange-400">
+                {prettyNum(user.account.id)}
+              </span>
+              <br />
+              <span className="text-sky-500">&nbsp;&nbsp;Profile Views: </span>
+              <span className="text-orange-400">
+                {prettyNum(user.account.profile_views)}
+              </span>
+              <br />
+              <span className="text-sky-500">&nbsp;&nbsp;XP: </span>
+              <span className="text-orange-400">
+                {prettyNum(user.account.xp)}
+              </span>
+              <br />
+              <span className="text-sky-500">&nbsp;&nbsp;kills: </span>
+              <span className="text-orange-400">
+                {prettyNum(user.totalStats.kills)}
+              </span>
             </p>
           </div>
         </div>

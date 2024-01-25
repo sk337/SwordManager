@@ -54,3 +54,49 @@ export function dateParse(dates){
   }
   return `${monthMap[date[1]]} ${date[2]} ${date[3]}`;
 }
+
+
+
+export function parseDailyStats(stats){
+  function dateDiff(date1, date2) {
+    const pastDate = new Date(date1).getTime();
+    const now = new Date(date2).getTime();
+    return Math.floor((now - pastDate) / 1000 /60/60/24);
+    
+  }
+  let xpData = [];
+  let gamesData = [];
+  let playtimeData = [];
+  let killsData = [];
+  let coinsData = [];
+  
+  let i=0;
+  while (i<=stats.length){
+    let index=stats.length-1-i;
+    let stat=stats[index];
+    console.log("filling Date " +stat["date"])
+    if (i>0){
+      let diff = dateDiff(stats[index+1]["date"], stat["date"])
+      console.log(diff)
+      if(diff > 1) {
+        console.log(`filling ${diff} days`)
+        let t=1;
+        while (t<diff){
+          xpData.push(0);
+          gamesData.push(0);
+          playtimeData.push(0);
+          killsData.push(0);
+          coinsData.push(0);
+          t++;
+        }
+      }
+    }
+    xpData.push(stat["xp"]);
+    gamesData.push(stat["games"]);
+    playtimeData.push(stat["playtime"]);
+    killsData.push(stat["kills"]);
+    coinsData.push(stat["coins"]);
+    i++;
+  }
+  return [xpData, gamesData, playtimeData, killsData, coinsData];
+}
