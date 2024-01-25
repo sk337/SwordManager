@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Nav from "@/components/nav";
 import { getPubInfo } from "@/utils/login";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Card,
   CardContent,
@@ -14,12 +10,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import cosmetics from "@/../cosmetics";
 
-import { dateParse } from "@/utils/jsutils";
+import { dateParse, prettyNum } from "@/utils/jsutils";
 
 export default function Profile() {
-  const urlData = new URL("https://"+window.location.hash.replace("#", "q/s"))
-  console.log(urlData)
+  const urlData = new URL(
+    "https://" + window.location.hash.replace("#", "q/"),
+  );
+  // console.log(urlData);
   if (!urlData.searchParams.get("user")) {
     return (
       <main>
@@ -43,15 +42,15 @@ export default function Profile() {
     fetchUser();
   }, []);
 
-
   if (user && !user.error) {
+    console.log(user);
     return (
       <main>
         <Nav />
         <div className="flex flex-col items-center">
           <div className="felx flex-row items-center justify-center p-5">
             <h1 className="text-3xl font-bold text-center">Profile</h1>
-            <Card>
+            <Card className="w-[400px]">
               <CardHeader>
                 <CardTitle>{user.account.username}</CardTitle>
               </CardHeader>
@@ -61,26 +60,28 @@ export default function Profile() {
                     <AvatarImage src={user.image} />
                     <AvatarFallback>AV</AvatarFallback>
                   </Avatar>
-                  <div className="space-y-2">
-                    <p>Joined: {dateParse(user.account.created_at)}</p>
-                    <p>XP: {user.account.xp}</p>
+                  <div>
+                    <p>
+                      <span className="text-sky-500">Joined:</span>{" "}
+                      {dateParse(user.account.created_at)}
+                    </p>
+                    <p>
+                      <span className="text-sky-500">XP:</span> {prettyNum(user.account.xp)}
+                    </p>
                   </div>
                 </div>
-                <p>Level: {user.account.level}</p>
+                <p><span className="text-sky-500">User Id: </span>{prettyNum(user.account.id)}<br/>{user.account.lastUsernameChange != null ? <span className="text-sky-500">Last Username change: <span className="text-white">{dateParse(user.account.lastUsernameChange)}<br/></span></span> :""}<span className="text-sky-500">Profile Views: </span>{prettyNum(user.account.profile_views)}</p>
               </CardContent>
               <CardFooter>
                 <p>More stats coming soon</p>
               </CardFooter>
             </Card>
-           
           </div>
         </div>
       </main>
     );
-  } else if(user.error){
-    return (
-      <p>not found</p>
-    )
+  } else if (user.error) {
+    return <p>not found</p>;
   } else {
     return (
       <main>
