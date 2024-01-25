@@ -132,3 +132,5 @@ dist
 # Replit Files
 .replit
 replit.nix
+
+package-lock.json
