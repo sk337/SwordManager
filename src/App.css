@@ -2,10 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
 @font-face {
   font-family: 'nf-symbol';
-  src: url('./SymbolsNerdFont-Regular.ttf') format('truetype');
+  src: url('./fonts/SymbolsNerdFont-Regular.ttf') format('truetype');
 }
+
+@font-face{
+  font-family: 'nf-symbol-mono';
+  src: url('./fonts/SymbolsNerdFontMono-Regular.ttf') format('truetype');
+}
+
 
 @layer base {
   

@@ -75,6 +75,7 @@ module.exports = {
       },
       fontFamily: {
         'symbol': ['nf-symbol', 'sans-serif'],
+        'mono': ['JetBrainsMono', 'monospace']
       },
     },
   },
