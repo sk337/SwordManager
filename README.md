@@ -2,7 +2,7 @@
 
 > **100% client sided Sword Battle account manager written in react**
 
-**Use Now [here](https://sword-manager.replit.app)**
+**Use Now [here](https://sword-manager.pages.dev)**
 
 ## Run Locally
 
