@@ -45,6 +45,7 @@ jobs:
           npm run build
         env:
           VITE_BASE_URL: "SwordManager"
+          VITE_URL: "https://sk337.github.io/SwordManager"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
