@@ -1,28 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { checkLogin, tokenlogin, getPubInfo, login } from "@/utils/login";
+import { checkLogin, tokenlogin, getPubInfo } from "@/utils/login";
 import cosmetics from "@/../cosmetics.json";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Toaster } from "@/components/ui/toaster";
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import {
@@ -67,23 +50,6 @@ export default function App() {
     };
     fetchUserData();
   }, []);
-
-  function flogin() {
-    login(
-      document.getElementById("username").value,
-      document.getElementById("password").value
-    ).then((res) => {
-      if (res.error) {
-        document.getElementById("error").classList.remove("hidden");
-        document.getElementById(
-          "desc"
-        ).innerHTML = `${res.error}: ${res.message}`;
-      } else {
-        window.localStorage.setItem("token", res.token);
-        window.location.reload();
-      }
-    });
-  }
 
   if (isLogin == false) {
     return <Login />;
@@ -326,7 +292,7 @@ export default function App() {
                               if (
                                 !skin.og &&
                                 !userData.account.skins.owned.includes(
-                                  skin.id
+                                  skin.id,
                                 ) &&
                                 skin.price <= userData.account.gems
                               ) {
@@ -421,6 +387,19 @@ export default function App() {
                   <br />
                   &nbsp;&nbsp;<span className="text-sky-500">games: </span>
                   {prettyNum(pubInfo.totalStats.games)}
+                  <br />
+                  <a
+                    href="#"
+                    onClick={() => {
+                      window.location.hash =
+                        "#stats?user=" +
+                        encodeURIComponent(userData.account.username);
+                      window.location.reload();
+                    }}
+                    className="underline"
+                  >
+                    More Stats
+                  </a>
                 </p>
               </CardContent>
             </Card>

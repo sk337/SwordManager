@@ -36,52 +36,49 @@ export function id2skin(id) {
   }
 }
 
-export function dateParse(dates){
+export function dateParse(dates) {
   let date = new Date(dates).toString().split(" ");
-  let monthMap= {
-    "Jan": "January",
-    "Feb": "February",
-    "Mar": "March",
-    "Apr": "April",
-    "May": "May",
-    "Jun": "June",
-    "Jul": "July",
-    "Aug": "August",
-    "Sep": "September",
-    "Oct": "October",
-    "Nov": "November",
-    "Dec": "December"
-  }
+  let monthMap = {
+    Jan: "January",
+    Feb: "February",
+    Mar: "March",
+    Apr: "April",
+    May: "May",
+    Jun: "June",
+    Jul: "July",
+    Aug: "August",
+    Sep: "September",
+    Oct: "October",
+    Nov: "November",
+    Dec: "December",
+  };
   return `${monthMap[date[1]]} ${date[2]} ${date[3]}`;
 }
 
-
-
-export function parseDailyStats(stats){
+export function parseDailyStats(stats) {
   function dateDiff(date1, date2) {
     const pastDate = new Date(date1).getTime();
     const now = new Date(date2).getTime();
-    return Math.floor((now - pastDate) / 1000 /60/60/24);
-    
+    return Math.floor((now - pastDate) / 1000 / 60 / 60 / 24);
   }
   let xpData = [];
   let gamesData = [];
   let playtimeData = [];
   let killsData = [];
   let coinsData = [];
-  
-  let i=0;
-  while (i<=stats.length){
-    let index=stats.length-1-i;
-    let stat=stats[index];
-    console.log("filling Date " +stat["date"])
-    if (i>0){
-      let diff = dateDiff(stats[index+1]["date"], stat["date"])
-      console.log(diff)
-      if(diff > 1) {
-        console.log(`filling ${diff} days`)
-        let t=1;
-        while (t<diff){
+
+  let i = 0;
+  while (i <= stats.length) {
+    let index = stats.length - 1 - i;
+    let stat = stats[index];
+    console.log("filling Date " + stat["date"]);
+    if (i > 0) {
+      let diff = dateDiff(stats[index + 1]["date"], stat["date"]);
+      console.log(diff);
+      if (diff > 1) {
+        console.log(`filling ${diff} days`);
+        let t = 1;
+        while (t < diff) {
           xpData.push(0);
           gamesData.push(0);
           playtimeData.push(0);

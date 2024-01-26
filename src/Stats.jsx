@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { getPubInfo } from "@/utils/login";
-import { prettyNum, id2skin, dateParse, parseDailyStats } from "@/utils/jsutils";
+import {
+  prettyNum,
+  id2skin,
+  dateParse,
+  parseDailyStats,
+} from "@/utils/jsutils";
 import cosmetics from "@/../cosmetics.json";
 import Nav from "@/components/nav";
 import {
@@ -18,8 +23,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { Line } from 'react-chartjs-2';
-
+import { Line } from "react-chartjs-2";
 
 export default function Stats() {
   const urlData = new URL("https://" + window.location.hash.replace("#", "q/"));
@@ -45,9 +49,9 @@ export default function Stats() {
   }, []);
 
   if (user && !user.error) {
-    let stats = parseDailyStats(user.dailyStats)
+    let stats = parseDailyStats(user.dailyStats);
     // console.log(user);
-    console.log(stats)
+    console.log(stats);
     return (
       <main>
         <Nav />

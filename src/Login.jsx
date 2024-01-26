@@ -1,4 +1,3 @@
-
 import {
   Card,
   CardContent,
@@ -7,16 +6,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { login } from "@/utils/login"
+import { login } from "@/utils/login";
 
 export default function Login() {
   function flogin() {
@@ -36,9 +30,9 @@ export default function Login() {
   }
 
   function register() {
-    alert("For Now, Registration is not available for now. Please Login.")
+    alert("For Now, Registration is not available for now. Please Login.");
   }
-  
+
   return (
     <main className="flex flex-col items-center justify-center">
       <div className="flex flex-wrap items-center justify-center w-2/5 mt-10">
@@ -103,7 +97,6 @@ export default function Login() {
             </Card>
           </TabsContent>
         </Tabs>
-       
       </div>
     </main>
   );
