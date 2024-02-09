@@ -7,11 +7,19 @@ import "highlight.js/styles/base16/windows-10.min.css";
 import Leaderboard from "@/Leaderboard";
 import Profile from "@/Profile";
 import Stats from "@/Stats";
+import Maintience from "./Maintience";
+const isMaintience = true;
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 console.log(window.location.hash.toLowerCase());
 
-if (window.location.hash.toLowerCase().startsWith("#leaderboard")) {
+if (isMaintience) {
+  root.render(
+    <React.StrictMode>
+      <Maintience />
+    </React.StrictMode>,
+  );
+} else if (window.location.hash.toLowerCase().startsWith("#leaderboard")) {
   root.render(
     <React.StrictMode>
       <Leaderboard />
