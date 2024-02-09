@@ -75,7 +75,7 @@ export default function App() {
   }
 
   function logout() {
-    window.localStorage.removeItem("token");
+    window.localStorage.removeItem("secret");
     window.location.reload();
   }
 
@@ -125,10 +125,9 @@ export default function App() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "bearer " + window.localStorage.getItem("token"),
       },
       body: JSON.stringify({
-        token: window.localStorage.getItem("token"),
+        secret: window.localStorage.getItem("secret"),
       }),
     }).then((req) => {
       console.log(req);
@@ -152,11 +151,10 @@ export default function App() {
     fetch(`${ApiUrl}profile/cosmetics/skins/equip/${eskin}`, {
       method: "POST",
       headers: {
-        Authorization: "bearer " + window.localStorage.getItem("token"),
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        token: window.localStorage.getItem("token"),
+        secret: window.localStorage.getItem("secret"),
       }),
     }).then((req) => {
       req.json().then((obj) => {

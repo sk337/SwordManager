@@ -3,12 +3,15 @@ const ApiUrl = "https://sb-api-fb48ef34a197.herokuapp.com/";
 import { id2skin } from "./jsutils";
 
 export async function checkLogin() {
-  if (window.localStorage.getItem("token") !== null) {
-    let account = await fetch(ApiUrl + "auth/account", {
-      method: "GET",
+  if (window.localStorage.getItem("secret") !== null) {
+    let account = await fetch(ApiUrl + "auth/loginWithSecret", {
+      method: "POST",
       headers: {
-        Authorization: "Bearer " + window.localStorage.getItem("token"),
+        "Content-Type": "application/json",
       },
+      body: JSON.stringify({
+        secret: window.localStorage.getItem("secret"),
+      })
     });
     const data = await account.json();
     if (Object.prototype.hasOwnProperty.call(data, "error")) {
@@ -36,12 +39,14 @@ export async function login(username, password) {
 }
 
 export async function tokenlogin() {
-  const login = await fetch(ApiUrl + "auth/account", {
-    method: "GET",
+  const login = await fetch(ApiUrl + "auth/loginWithSecret", {
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: "Bearer " + window.localStorage.getItem("token"),
     },
+    body: JSON.stringify({
+      secret: window.localStorage.getItem("secret"),
+    })
   });
   const data = await login.json();
   // console.log(data, login.status);

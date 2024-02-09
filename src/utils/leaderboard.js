@@ -20,10 +20,7 @@ export const typeLst = [
   ["kills", "Kills"],
   ["coins", "Coins"],
   ["playtime", "Survived"],
-  ["xp", "XP"],
-  ["coins", "Total Coins"],
-  ["kills", "Total Stabs"],
-  ["playtime", "Total Playtime"],
+  ["xp", "XP"]
 ];
 
 const ApiUrl = "https://sb-api-fb48ef34a197.herokuapp.com/";

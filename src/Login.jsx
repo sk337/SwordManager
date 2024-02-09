@@ -23,7 +23,8 @@ export default function Login() {
         document.getElementById("desc").innerHTML =
           `${res.error}: ${res.message}`;
       } else {
-        window.localStorage.setItem("token", res.token);
+        // console.log(res)
+        window.localStorage.setItem("secret", res.secret);
         window.location.reload();
       }
     });

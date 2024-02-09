@@ -17,6 +17,8 @@
 
 Contributions are Greatly appreciated and can be done at [github.com](https://github.com/sk337/SwordManager)
 
+to update submodule `git submodule update --remote --merge`
+
 ## contact
 
 * Github: [sk337](https://github.com/sk337)

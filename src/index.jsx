@@ -8,7 +8,8 @@ import Leaderboard from "@/Leaderboard";
 import Profile from "@/Profile";
 import Stats from "@/Stats";
 import Maintience from "./Maintience";
-const isMaintience = true;
+
+const isMaintience = false;
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 console.log(window.location.hash.toLowerCase());

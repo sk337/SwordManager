@@ -71,12 +71,16 @@ export function parseDailyStats(stats) {
   while (i <= stats.length) {
     let index = stats.length - 1 - i;
     let stat = stats[index];
-    console.log("filling Date " + stat["date"]);
+    // console.log(i, index)
+    if (index < 0){
+      break
+    }
     if (i > 0) {
+      // console.log("filling Date " + stat["date"]);
       let diff = dateDiff(stats[index + 1]["date"], stat["date"]);
-      console.log(diff);
+      // console.log(diff);
       if (diff > 1) {
-        console.log(`filling ${diff} days`);
+        // console.log(`filling ${diff} days`);
         let t = 1;
         while (t < diff) {
           xpData.push(0);
@@ -88,6 +92,7 @@ export function parseDailyStats(stats) {
         }
       }
     }
+    
     xpData.push(stat["xp"]);
     gamesData.push(stat["games"]);
     playtimeData.push(stat["playtime"]);

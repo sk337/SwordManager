@@ -72,10 +72,24 @@ export default function Leaderboard() {
                 </SelectGroup>
               </SelectContent>
             </Select>
-            <Select>
+            <Select onValueChange={(val) => {setType(val)}}>
               <SelectTrigger className="w-[180px] mt-5">
                 <SelectValue placeholder="Xp" />
               </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Type</SelectLabel>
+                  {
+                    typeLst.map((type)=>{
+                      return (
+                        <SelectItem key={type[0]} value={type[0]}>
+                          {type[1]}
+                        </SelectItem>
+                      )
+                    })
+                  }
+                </SelectGroup>
+              </SelectContent>
             </Select>
           </div>
           <p className="text-3xl text-center font-bold mt-5">Leaderboard</p>
